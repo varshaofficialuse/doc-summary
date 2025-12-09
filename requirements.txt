@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+python-multipart
+openai
+faiss-cpu
+pypdf
+python-docx
+pillow
+pytesseract
+python-dotenv
+tiktoken
