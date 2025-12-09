@@ -1,0 +1,140 @@
+{
+  "info": {
+    "name": "RAG GenAI Backend POC",
+    "_postman_id": "c6d3b2fa-0000-0000-0000-rag-genai-poc",
+    "description": "Postman collection for RAG GenAI Backend (upload, chat, image transform, health).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Upload Document",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": ""
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/documents/upload",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "documents",
+            "upload"
+          ]
+        },
+        "description": "Upload a PDF, DOCX, TXT, MD, PNG, JPG, JPEG, or WEBP file.\n\nReturns: document_id, filename, summary, type."
+      },
+      "response": []
+    },
+    {
+      "name": "Chat with Document (RAG)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"question\": \"What is the main topic of this document?\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/chat/{{document_id}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "chat",
+            "{{document_id}}"
+          ]
+        },
+        "description": "Ask a question about a previously uploaded document.\n\nSet `{{document_id}}` from the Upload Document response."
+      },
+      "response": []
+    },
+    {
+      "name": "Transform Image",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"prompt\": \"Make this look like a pencil sketch with high contrast\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/images/{{image_document_id}}/transform",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "images",
+            "{{image_document_id}}",
+            "transform"
+          ]
+        },
+        "description": "Apply an AI-based transformation to an image document.\n\n`{{image_document_id}}` must be a document_id from an image upload."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "document_id",
+      "value": ""
+    },
+    {
+      "key": "image_document_id",
+      "value": ""
+    }
+  ]
+}
